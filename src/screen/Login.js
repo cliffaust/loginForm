@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,16 @@ import {
 } from "react-native";
 
 const Login = () => {
+  const [form, setForm] = useState({
+    password: "",
+    username: "",
+  });
+  const handleOnChange = (name, text) => {
+    setForm({ ...form, [name]: text });
+  };
+  const submit = () => {
+    console.log(form);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.formContainer}>
@@ -19,20 +29,31 @@ const Login = () => {
           placeholder="Username"
           secureTextEntry={false}
           style={styles.inputUsername}
+          onChangeText={(text) => {
+            handleOnChange("username", text);
+          }}
         ></TextInput>
         <TextInput
           placeholder="Password"
           secureTextEntry={true}
           autoCompleteType="password"
           style={styles.inputPassword}
+          onChangeText={(text) => {
+            handleOnChange("password", text);
+          }}
         ></TextInput>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
-        <TouchableOpacity style={styles.btnBox}>
+        <TouchableOpacity>
+          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={submit} style={styles.btnBox}>
           <Text style={styles.btnText}>Log in</Text>
         </TouchableOpacity>
 
         <Text style={styles.noAccount}>
-          Don't have an account? <Text style={styles.signupText}>Sign up</Text>
+          Don't have an account?{" "}
+          <TouchableOpacity>
+            <Text style={styles.signupText}>Sign up</Text>
+          </TouchableOpacity>
         </Text>
       </ScrollView>
     </SafeAreaView>
